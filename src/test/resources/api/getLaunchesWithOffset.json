@@ -1,0 +1,4 @@
+{
+  "query": "{\n  launches(offset: 5) {\n    ships {\n      id\n      name\n    }\n    rocket {\n      second_stage {\n        block\n      }\n      first_stage {\n        cores {\n          block\n          land_success\n          landing_type\n        }\n      }\n    }\n    mission_name\n  }\n}\n",
+  "variables": null
+}
