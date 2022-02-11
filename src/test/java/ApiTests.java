@@ -89,6 +89,4 @@ public class ApiTests {
         .when()
         .post(SPACEX_URL).getBody().asString();
   }
-
-
 }
