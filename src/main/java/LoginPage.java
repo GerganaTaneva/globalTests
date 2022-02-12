@@ -1,22 +1,25 @@
 import models.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LoginPage extends AbstractPage {
+public class LoginPage {
 
-  private WebElement username = driver.findElement(By.id("user-name"));
+  private WebElement username;
+  private WebElement password;
+  private WebElement loginButton;
 
-  private WebElement password = driver.findElement(By.id("password"));
-
-  private WebElement loginButton = driver.findElement(By.id("login-button"));
-
-  LoginPage() {
-    super();
-
+  LoginPage(WebDriver driver) {
+    driver.get("https://www.saucedemo.com/");
+    driver.manage().window().maximize();
   }
 
-  public AbstractPage login(User user) {
+  public ProductsMainPage login(User user, WebDriver driver) {
+    username = driver.findElement(By.id("user-name"));
+    password = driver.findElement(By.id("password"));
+    loginButton = driver.findElement(By.id("login-button"));
+
     if(username.isEnabled() && password.isEnabled() && loginButton.isEnabled()) {
       username.sendKeys(user.getUsername());
       password.sendKeys(user.getPassword());

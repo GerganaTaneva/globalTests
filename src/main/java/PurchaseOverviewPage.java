@@ -1,20 +1,25 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class PurchaseOverviewPage extends AbstractPage {
+public class PurchaseOverviewPage {
 
-  WebElement onsieItem = driver.findElement(By.id("item_1_tittle_link"));
+  private WebElement onsieItem;
+  private WebElement backpackItem;
+  private WebElement finishButton;
+  private WebElement checkoutOverview;
 
-  WebElement backpackItem = driver.findElement(By.id("item_4_tittle_link"));
-
-  WebElement finishButton = driver.findElement(By.id("finish"));
-
-  public PurchaseOverviewPage() {
-    super();
+  public WebElement getCheckoutOverview(WebDriver driver) {
+    this.checkoutOverview = driver.findElement(By.xpath("//span[contains(text(),'Checkout: Overview')]"));
+    return this.checkoutOverview;
   }
 
-  public AbstractPage finishPurchase() {
+  public CompletedPurchasePage finishPurchase(WebDriver driver) {
+    onsieItem = driver.findElement(By.xpath("//div[contains(text(), 'Sauce Labs Onesie')]"));
+    backpackItem = driver.findElement(By.xpath("//div[contains(text(), 'Sauce Labs Backpack')]"));
+    finishButton = driver.findElement(By.id("finish"));
+
     if(onsieItem.isDisplayed() && backpackItem.isDisplayed()) {
       finishButton.click();
     }

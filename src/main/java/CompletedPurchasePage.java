@@ -1,21 +1,19 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class CompletedPurchasePage extends AbstractPage {
+public class CompletedPurchasePage {
 
-  private WebElement checkoutComplete = driver.findElement(By.xpath("//span[text()='Checkout: Complete!']"));
+  private WebElement checkoutComplete;
+  private WebElement backToHomeButton;
 
-  private WebElement backToHomeButton = driver.findElement(By.id("back_to_products"));
-
-  public WebElement getCheckoutComplete() {
+  public WebElement getCheckoutComplete(WebDriver driver) {
+    this.checkoutComplete = driver.findElement(By.xpath("//span[contains(text(),'Checkout: Complete!')]"));
     return this.checkoutComplete;
   }
 
-  public WebElement getBackToHomeButton() {
+  public WebElement getBackToHomeButton(WebDriver driver) {
+    this.backToHomeButton = driver.findElement(By.id("back-to-products"));
     return this.backToHomeButton;
-  }
-
-  public CompletedPurchasePage() {
-    super();
   }
 }

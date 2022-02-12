@@ -10,11 +10,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.qaprosoft</groupId>
-      <artifactId>carina-webdriver</artifactId>
-      <version>7.3.15</version>
-    </dependency>
-    <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>4.3.3</version>
@@ -38,14 +33,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.qaprosoft</groupId>
-      <artifactId>carina-core</artifactId>
-      <version>RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>4.5.3</version>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>7.4.0</version>
     </dependency>
   </dependencies>
   <build>
