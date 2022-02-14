@@ -3,14 +3,16 @@ This project contains test cases for global technical interview. Here are the re
 Java is the language used and the project is with Maven structure. There are source and test directories,
 representation of web pages and object models are stored in source folder and test scenarios are implemented in test one.
 
-API test cases
+##### API test cases
+
 Rest Assured and TestNG annotations are used for implementing test cases.
 Using https://api.spacex.land/graphql/ for API.
 
 NB: Test cases are not going to pass, because validation for number of ships to be grater than 0 will fail, due to empty
 list of ships in several launch objects.
 
-Web test cases
+##### Web test cases
+
 Selenium is used for automating test cases.
 As mentioned pages are extracted in separate classes and every one has its own elements.
 Chrome driver is configured to be used for the test.
