@@ -2,21 +2,16 @@ import models.User;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class WebTests {
 
   private User user = new User("standard_user", "secret_sauce");
   private WebDriver driver;
-//  private ProductsMainPage productsMainPage;
-//  private UserCartPage userCartPage;
-//  private CheckoutInfoPage checkoutInfoPage;
-//  private PurchaseOverviewPage purchaseOverviewPage;
-//  private CompletedPurchasePage completedPurchasePage;
 
-  @BeforeTest
+  @BeforeMethod
   public void setDriver() {
     System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
     driver = new ChromeDriver();
@@ -37,6 +32,8 @@ public class WebTests {
     Assert.assertTrue(productsMainPage.getProducts(driver).isDisplayed());
     UserCartPage userCartPage = productsMainPage.addCheapestAndSecondCostliestProductsToCart(driver);
     Assert.assertTrue(userCartPage.getYourCart(driver).isDisplayed());
+    Assert.assertTrue(userCartPage.getOnesie(driver).isDisplayed());
+    Assert.assertTrue(userCartPage.getBackpack(driver).isDisplayed());
     CheckoutInfoPage checkoutInfoPage = userCartPage.checkout(driver);
     Assert.assertTrue(checkoutInfoPage.getCheckoutInfo(driver).isDisplayed());
     PurchaseOverviewPage purchaseOverviewPage = checkoutInfoPage.addInfoForPurchase("Gergana", "Taneva",
@@ -45,9 +42,43 @@ public class WebTests {
     CompletedPurchasePage completedPurchasePage = purchaseOverviewPage.finishPurchase(driver);
     Assert.assertTrue(completedPurchasePage.getCheckoutComplete(driver).isDisplayed());
     Assert.assertTrue(completedPurchasePage.getBackToHomeButton(driver).isDisplayed());
+    productsMainPage = completedPurchasePage.getBackToMain(driver);
+    BurgerMenu menu = productsMainPage.openMenu(driver);
+    menu.logout(driver);
   }
 
-  @AfterTest
+  /**
+   * Log in with invalid User
+   */
+  @Test(description = "Login with invalid credentials")
+  public void loginWithInvalidCredentials() {
+    User invalidUser = new User("geriT@gmail.com", "55555");
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.login(invalidUser, driver);
+    Assert.assertEquals(loginPage.getErrorMessage(driver).getText(),
+        "Epic sadface: Username and password do not match any user in this service");
+  }
+
+  /**
+   * Login, add items in cart and log out
+   */
+  @Test(description = "Add T-shirts to cart and continue shopping")
+  public void addToCartTShirts() {
+    LoginPage loginPage = new LoginPage(driver);
+    ProductsMainPage productsMainPage = loginPage.login(user, driver);
+    Assert.assertTrue(productsMainPage.getProducts(driver).isDisplayed());
+    UserCartPage userCartPage = productsMainPage.addToCartTShirts(driver);
+    Assert.assertTrue(userCartPage.getYourCart(driver).isDisplayed());
+    Assert.assertTrue(userCartPage.getRedTShirt(driver).isDisplayed());
+    Assert.assertTrue(userCartPage.getBoltTShirt(driver).isDisplayed());
+    productsMainPage = userCartPage.continueShopping(driver);
+    BurgerMenu menu = productsMainPage.openMenu(driver);
+    loginPage = menu.logout(driver);
+    Assert.assertTrue(loginPage.getUsername(driver).isEnabled());
+    Assert.assertTrue(loginPage.getPassword(driver).isEnabled());
+  }
+
+  @AfterMethod
   public void closeDriver() {
     driver.close();
   }

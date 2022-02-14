@@ -16,4 +16,12 @@ public class CompletedPurchasePage {
     this.backToHomeButton = driver.findElement(By.id("back-to-products"));
     return this.backToHomeButton;
   }
+
+  public ProductsMainPage getBackToMain(WebDriver driver) {
+    this.backToHomeButton = driver.findElement(By.id("back-to-products"));
+    if(backToHomeButton.isDisplayed()) {
+      backToHomeButton.click();
+    }
+    return new ProductsMainPage();
+  }
 }
